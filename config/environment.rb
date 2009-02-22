@@ -37,7 +37,7 @@ Spree::Initializer.run do |config|
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-  config.plugins = [ :all, :resource_controller, :extension_patches ] 
+  config.plugins = [ :all, :resource_controller, :extension_patches, :exception_notification ] 
   
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
@@ -96,3 +96,5 @@ Time::DATE_FORMATS[:date_time24] = "%Y-%m-%d %H:%M"
 # Mime::Type.register "application/x-mobile", :mobile
 
 # Include your application configuration below
+
+ExceptionNotifier.exception_recipients = Spree::Config[:mail_bcc]

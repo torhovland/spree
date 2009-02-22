@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
   include RoleRequirementSystem
   include EasyRoleRequirementSystem
   include SslRequirement
+
+  include ExceptionNotifiable
+  local_addresses.clear
   
   private 
   
