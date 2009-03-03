@@ -22,7 +22,7 @@ en-GB:
         firstname: "First Name"
         lastname: "Last Name"
         phone: Phone
-        zipcode: "Zip Code"
+        zipcode: "Post Code"
       country: 
         iso: ISO
         iso3: ISO3
@@ -55,7 +55,7 @@ en-GB:
         description: Description
         master_price: "Master Price"
         name: Name
-        on_hand: "On Hande"
+        on_hand: "On Hand"
       property: 
         name: Name
         presentation: Presentation
@@ -207,6 +207,7 @@ en-GB:
   credit_card: "Credit Card"
   credit_card_capture_complete: "Credit Card Was Captured"
   credit_card_payment: "Credit Card Payment"
+  creditcard: Creditcard
   current: Current
   customer: Customer
   date_range: "Date Range"
@@ -341,7 +342,7 @@ en-GB:
   payments: Payments
   phone: Phone
   presentation: Presentation
-  previous: previous
+  previous: Previous
   price: Price
   problem_authorizing_card: "Problem authorizing credit card"
   problem_capturing_card: "Problem capturing credit card"
@@ -391,6 +392,7 @@ en-GB:
   shopping_cart: "Shopping Basket"
   show_deleted: "Show Deleted"
   show_incomplete_orders: "Show Incomplete Orders"
+  show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
   sign_up: "Sign up"
   sku: SKU
@@ -404,10 +406,10 @@ en-GB:
     date: Date
     time: Time                                               
   start: Start
-  state: State
+  state: County
   state_based: "State Based"
   state_setting_description: "Administer the list of states/provinces associated with each country."
-  states: States
+  states: Counties
   status: Status
   stop: Stop
   store: Store
@@ -438,6 +440,7 @@ en-GB:
   updated_successfully:
   use_different_shipping_address: "Use Different Shipping Address"
   user: User
+  user_account: User Account
   user_details: "User Details"
   users: Users
   value: Value
@@ -451,7 +454,7 @@ en-GB:
   whats_this: "What's this"
   width: Width
   your_cart_is_empty: "Your basket is empty"
-  zip: Zip
+  zip: Post Code
   zone: Zone
   zone_based: "Zone Based"
   zone_setting_description: "Collections of countries, states or other zones to be used in various calculations."

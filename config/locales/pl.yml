@@ -207,6 +207,7 @@ pl:
   credit_card: "Karta kredytowa"
   credit_card_capture_complete: "Credit Card Was Captured"
   credit_card_payment: "Credit Card Payment"
+  creditcard: Creditcard
   current: Biężący
   customer: Klient
   date_range: "Zakres czasu"
@@ -391,6 +392,7 @@ pl:
   shopping_cart: Koszyk
   show_deleted: "Show Deleted"
   show_incomplete_orders: "Show Incomplete Orders"
+  show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
   sign_up: "Załóż konto"
   sku: SKU
@@ -438,6 +440,7 @@ pl:
   updated_successfully:
   use_different_shipping_address: "Użyj innego adresy dostawy"
   user: Użytkownik
+  user_account: User Account
   user_details: "User Details"
   users: Użytkownicy
   value: Wartość

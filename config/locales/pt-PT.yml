@@ -207,6 +207,7 @@ pt-PT:
   credit_card: "Cartão de Crédito"
   credit_card_capture_complete: "Credit Card Was Captured"
   credit_card_payment: "Pagamento com Cartão de Crédito"
+  creditcard: Creditcard
   current: Actual
   customer: Cliente
   date_range: "Entre as Datas"
@@ -391,6 +392,7 @@ pt-PT:
   shopping_cart: "Carro de Compra"
   show_deleted: "Mortra Eliminados"
   show_incomplete_orders: "Mostra Encomendas Incompletas"
+  show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Mostra produtos sem stock"
   sign_up: Inscrever
   sku: SKU
@@ -438,6 +440,7 @@ pt-PT:
   updated_successfully: Actualizado com sucesso
   use_different_shipping_address: "Use um Endereço de Entrega Diferente"
   user: Utilizador
+  user_account: User Account
   user_details: "Detalhes do Utilizador"
   users: Utilizador
   value: Valor

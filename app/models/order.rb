@@ -44,8 +44,6 @@ class Order < ActiveRecord::Base
     after_transition :to => 'canceled', :do => :cancel_order
     after_transition :to => 'returned', :do => :restock_inventory
     after_transition :to => 'resumed', :do => :restore_state 
-
-    before_transition :to => 'paid', :do => :record_payment_event
     
     event :next do
       transition :to => 'creditcard', :from => 'in_progress'
@@ -67,11 +65,6 @@ class Order < ActiveRecord::Base
       transition :to => 'paid', :if => :allow_pay?
     end
   end
-
-  def record_payment_event
-    # normally these types of transitions are recorded by controller
-    state_events.create(:name => I18n.t(:pay), :previous_state => state)
-  end
   
   def restore_state
     # pop the resume event so we can see what the event before that was
@@ -80,7 +73,7 @@ class Order < ActiveRecord::Base
   end
 
   def allow_cancel?
-    self.checkout_complete && self.state != 'canceled'
+    self.state != 'canceled'
   end
   
   def allow_resume?

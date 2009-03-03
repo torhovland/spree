@@ -207,6 +207,7 @@ es:
   credit_card: ""
   credit_card_capture_complete: "Credit Card Was Captured"
   credit_card_payment: "Credit Card Payment"
+  creditcard: Creditcard
   current: Actual
   customer: Cliente
   date_range: "Rango de Fecha"
@@ -391,6 +392,7 @@ es:
   shopping_cart: "Cesta de compras"
   show_deleted: "Show Deleted"
   show_incomplete_orders: "Show Incomplete Orders"
+  show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
   sign_up: Registrarme
   sku: Código
@@ -438,6 +440,7 @@ es:
   updated_successfully:
   use_different_shipping_address: "Usar una dirección de envío diferente"
   user: Usuario
+  user_account: User Account
   user_details: "User Details"
   users: Usuarios
   value: ""
