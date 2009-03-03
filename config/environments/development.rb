@@ -12,7 +12,7 @@ config.whiny_nils = true
 #config.breakpoint_server = true
 
 # Show full error reports and disable caching
-config.action_controller.consider_all_requests_local = false
+config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 
 # DEPRECATED
@@ -20,10 +20,7 @@ config.action_controller.perform_caching             = false
 config.action_view.debug_rjs                         = true
 
 # Don't send emails in development mode
-# config.action_mailer.delivery_method = :test
+config.action_mailer.delivery_method = :test
 
 # Don't care if the mailer can't send
-# config.action_mailer.raise_delivery_errors = false
-
-Paperclip.options[:command_path] = '/usr/bin/'
-
+config.action_mailer.raise_delivery_errors = false
