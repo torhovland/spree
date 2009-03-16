@@ -13,7 +13,6 @@ class Order < ActiveRecord::Base
   has_many :creditcard_payments
   has_many :creditcards
   belongs_to :user
-  has_many :shipments, :dependent => :destroy
 
   validates_associated :line_items, :message => "are not valid"
   validates_numericality_of :tax_amount
@@ -45,9 +44,13 @@ class Order < ActiveRecord::Base
     after_transition :to => 'canceled', :do => :cancel_order
     after_transition :to => 'returned', :do => :restock_inventory
     after_transition :to => 'resumed', :do => :restore_state 
-     
-    event :complete do
-      transition :to => 'new', :from => 'in_progress'
+    
+    event :next do
+      transition :to => 'creditcard', :from => 'in_progress'
+      transition :to => 'new', :from => 'creditcard'
+    end
+    event :edit do
+      transition :to => 'in_progress', :from => %w{creditcard in_progress}
     end
     event :cancel do
       transition :to => 'canceled', :if => :allow_cancel?
@@ -60,9 +63,6 @@ class Order < ActiveRecord::Base
     end    
     event :pay do
       transition :to => 'paid', :if => :allow_pay?
-    end
-    event :ship do
-      transition :to => 'shipped', :from  => 'paid'
     end
   end
   
@@ -141,18 +141,6 @@ class Order < ActiveRecord::Base
     return nil if creditcards.empty?
     return creditcards.last.address
   end
-
-  # convenience method since many stores will not allow user to create multiple shipments
-  def shipment
-    shipments.last
-  end
-  
-  def ship_address
-    return nil if shipments.empty?
-    return shipment.address
-  end      
- 
-  include Spree::ShippingCalculator
  
   private
   def complete_order
@@ -160,12 +148,7 @@ class Order < ActiveRecord::Base
     InventoryUnit.sell_units(self)
     if user && user.email
       OrderMailer.deliver_confirm(self)
-    end   
-    # finalize order totals 
-    calculator = shipment.shipping_method.shipping_calculator.constantize.new
-    self.ship_amount = calculator.calculate_shipping(shipment) 
-    self.tax_amount = calculate_tax
-    save
+    end
   end
   
   def cancel_order

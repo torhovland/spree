@@ -6,8 +6,7 @@
   <td valign="top">              
     <%= link_to variant.product.name,  product_path(variant.product) %>
     <%= variant_options variant %><br/>
-    <%= truncate(variant.product.description, :length => 100, :omission => "...") %>
-
+    <%= truncate(variant.product.description, length = 100, truncate_string = "...") %>
   </td>
   <td valign="top" width="75">
 		<%= product_price(line_item) %>

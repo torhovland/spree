@@ -2,9 +2,6 @@ module ActivePresenter
   # Base class for presenters. See README for usage.
   #
   class Base
-    include ActiveSupport::Callbacks
-    define_callbacks :before_save, :after_save
-    
     class_inheritable_accessor :presented
     self.presented = {}
     
@@ -12,25 +9,19 @@ module ActivePresenter
     # i.e.
     #
     #   class SignupPresenter < ActivePresenter::Base
-    #     presents :user, :account
+    #     presents User, Account
     #   end
     #
     #
     def self.presents(*types)
-      #attr_accessor *types
+      attr_accessor *types
       
       types.each do |t|
         define_method("#{t}_errors") do
           send(t).errors
         end
-        if t.is_a? Hash             
-          key = t.keys.first
-          presented[key] = t[key]
-          attr_accessor key
-        else
-          presented[t] = t.to_s.tableize.classify.constantize
-          attr_accessor t
-        end
+        
+        presented[t] = t.to_s.tableize.classify.constantize
       end
     end
     
@@ -65,7 +56,7 @@ module ActivePresenter
       
       self.attributes = args
     end
-
+    
     # Set the attributes of the presentable instances using the type_attribute form (i.e. user_login => 'james')
     #
     def attributes=(attrs)
@@ -110,13 +101,11 @@ module ActivePresenter
       saved = false
       
       ActiveRecord::Base.transaction do
-        if valid? && run_callbacks_with_halt(:before_save)
+        if valid?
           saved = presented_instances.map { |i| i.save(false) }.all?
           raise ActiveRecord::Rollback unless saved # TODO: Does this happen implicitly?
         end
       end
-      
-      run_callbacks_with_halt(:after_save) if saved
       
       saved
     end
@@ -126,14 +115,10 @@ module ActivePresenter
     # Returns true on success, will raise otherwise.
     # 
     def save!
-      raise ActiveRecord::RecordNotSaved unless run_callbacks_with_halt(:before_save)
-      
       ActiveRecord::Base.transaction do
         valid? # collect errors before potential exception raise
         presented_instances.each { |i| i.save! }
       end
-      
-      run_callbacks_with_halt(:after_save)
     end
     
     # Update attributes, and save the presentables
@@ -143,15 +128,6 @@ module ActivePresenter
     def update_attributes(attrs)
       self.attributes = attrs
       save
-    end
-    
-    # We define #id and #new_record? to play nice with form_for(@presenter) in Rails
-    def id # :nodoc:
-      nil
-    end
-
-    def new_record?
-      true
     end
     
     protected
@@ -165,7 +141,7 @@ module ActivePresenter
       end
       
       def presentable_for(method_name)
-        presented.keys.sort_by { |k| k.to_s.size }.reverse.detect do |type|
+        presented.keys.detect do |type|
           method_name.to_s.starts_with?(attribute_prefix(type))
         end
       end
@@ -185,20 +161,14 @@ module ActivePresenter
       
       def merge_errors(presented_inst, type)
         presented_inst.errors.each do |att,msg|
-          errors.add(attribute_prefix(type)+att, msg)
+          errors.add(attribute_prefix(type)+att, msg.to_s)
         end
       end
       
       def attribute_protected?(name)
-        return false # HACK - We're not using any sensitive objects in presenter and the multiple Address models in one presenter was breaking
         presentable    = presentable_for(name)
-        return false unless presentable
         flat_attribute = {flatten_attribute_name(name, presentable) => ''} #remove_att... normally takes a hash, so we use a ''
         presentable.to_s.tableize.classify.constantize.new.send(:remove_attributes_protected_from_mass_assignment, flat_attribute).empty?
-      end
-      
-      def run_callbacks_with_halt(callback)
-        run_callbacks(callback) { |result, object| result == false }
       end
   end
 end
