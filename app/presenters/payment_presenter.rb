@@ -1,3 +1,3 @@
 class PaymentPresenter < ActivePresenter::Base
-  presents :creditcard, :address
+  #presents :creditcard, :address
 end
