@@ -6,6 +6,11 @@ class TaxonsController < Spree::BaseController
   
   private
   def load_data
+    if object == nil
+      redirect_to root_url
+      return
+    end
+
     @search = object.products.active.new_search(params[:search])
     @search.per_page = Spree::Config[:products_per_page]
     @search.include = :images
